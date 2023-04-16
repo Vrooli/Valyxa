@@ -1,0 +1,7 @@
+redis
+Flask
+requests
+beautifulsoup4
+lxml
+openai
+python-dotenv

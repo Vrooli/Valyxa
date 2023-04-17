@@ -14,6 +14,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del .build-deps
 
-COPY . .
+# Install gettext separately
+RUN apk add --no-cache gettext
 
-CMD ["python", "src/app.py"]
+COPY . .

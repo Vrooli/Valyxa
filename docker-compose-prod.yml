@@ -19,7 +19,7 @@ services:
       args:
         PROJECT_DIR: "${PROJECT_DIR}"
     container_name: valyxa-python
-    image: valyxa-python:dev
+    image: valyxa-python:prod
     volumes:
       - ./:${PROJECT_DIR}
       - ./translations:${PROJECT_DIR}/translations

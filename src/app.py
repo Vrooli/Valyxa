@@ -1,5 +1,6 @@
 import os
 import redis
+from prompts.routine import ROUTINE_CRITICIZE
 from time import sleep
 from dotenv import load_dotenv
 
@@ -91,6 +92,8 @@ def auto_gpt(goal):
     return result
 
 def main():
+    print(f"Prompt import test: {ROUTINE_CRITICIZE}")
+
     redis_url = os.environ["REDIS_URL"]
     r = redis.Redis.from_url(redis_url)
 

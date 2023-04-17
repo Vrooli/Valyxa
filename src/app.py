@@ -108,5 +108,7 @@ def main():
     retrieved_value = r.get(key).decode('utf-8')
     print(f"Retrieved value for key '{key}': {retrieved_value}")
 
+    sleep(100)
+
 if __name__ == "__main__":
     main()

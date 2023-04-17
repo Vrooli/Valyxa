@@ -1,0 +1,1 @@
+API_CRITICIZE = "Review the given API schema and provide constructive feedback, focusing on the following aspects: consistency, readability, naming conventions, structure, and overall design. Offer recommendations for improvements to enhance the schema's usability, maintainability, and scalability."

@@ -16,4 +16,4 @@ RUN apk add --no-cache --virtual .build-deps \
 
 COPY . .
 
-CMD ["python", "app.py"]
+CMD ["python", "src/app.py"]

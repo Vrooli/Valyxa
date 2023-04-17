@@ -29,4 +29,5 @@ services:
       PROJECT_DIR: "${PROJECT_DIR}"
       REDIS_URL: "${REDIS_URL}"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
-    command: /bin/sh -c "chmod +x ${PROJECT_DIR}/scripts/* && ${PROJECT_DIR}/scripts/start.sh"
+      LANGUAGES: "${LANGUAGES}"
+    command: ["${PROJECT_DIR}/scripts/start.sh"]

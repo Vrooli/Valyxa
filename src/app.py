@@ -1,10 +1,22 @@
 import os
 import redis
+import gettext
 from prompts.routine import ROUTINE_CRITICIZE
 from time import sleep
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Set the locale directory and the target language
+locale_dir = os.path.join(os.environ['PROJECT_DIR'], 'translations')
+language = 'en'
+
+# Configure gettext
+gettext.bindtextdomain('messages', locale_dir)
+gettext.textdomain('messages')
+
+# Import the translation function
+_ = gettext.gettext
 
 def plan(goal):
     """
@@ -92,7 +104,8 @@ def auto_gpt(goal):
     return result
 
 def main():
-    print(f"Prompt import test: {ROUTINE_CRITICIZE}")
+    print('starting main')
+    print(f"Translation test: {ROUTINE_CRITICIZE}")
 
     redis_url = os.environ["REDIS_URL"]
     r = redis.Redis.from_url(redis_url)

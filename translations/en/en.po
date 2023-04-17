@@ -1,0 +1,407 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# root <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-17 20:13+0000\n"
+"PO-Revision-Date: 2023-04-17 20:00+0000\n"
+"Last-Translator: root <EMAIL@ADDRESS>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /srv/app/src/prompts/api.py:4
+#, fuzzy
+msgid "TODO1"
+msgstr "TODO10"
+
+#: /srv/app/src/prompts/api.py:7
+msgid "TODO2"
+msgstr "TODO2"
+
+#: /srv/app/src/prompts/api.py:10
+msgid "TODO3"
+msgstr "TODO3"
+
+#: /srv/app/src/prompts/api.py:13
+#, fuzzy
+msgid ""
+"Review the given API schema and provide constructive feedback, focusing on "
+"the following aspects: consistency, readability, naming conventions, "
+"structure, and overall design. Offer recommendations for improvements to "
+"enhance the schema's usability, maintainability, and scalability."
+msgstr ""
+"Review the given API schema and provide constructive feedback, focusing on "
+"the following aspects: consistency, readability, naming conventions, "
+"structure, and overall design. Offer recommendations for improvements to "
+"enhance the schema's usability, maintainability, and scalability."
+
+#: /srv/app/src/prompts/calendar.py:4
+msgid ""
+"Review the user's calendar and identify any recurring events, meetings, or "
+"tasks that can be grouped together to create a more efficient and "
+"streamlined system. Provide a detailed breakdown of how these events can be "
+"grouped and transformed to create a more efficient and streamlined system "
+"for the user."
+msgstr ""
+"Review the user's calendar and identify any recurring events, meetings, or "
+"tasks that can be grouped together to create a more efficient and "
+"streamlined system. Provide a detailed breakdown of how these events can be "
+"grouped and transformed to create a more efficient and streamlined system "
+"for the user."
+
+#: /srv/app/src/prompts/calendar.py:7
+msgid "TODO4"
+msgstr "TODO4"
+
+#: /srv/app/src/prompts/calendar.py:10
+msgid "TODO5"
+msgstr "TODO5"
+
+#: /srv/app/src/prompts/organization.py:4
+msgid "TODO6"
+msgstr "TODO6"
+
+#: /srv/app/src/prompts/organization.py:7
+msgid "TODO7"
+msgstr "TODO7"
+
+#: /srv/app/src/prompts/organization.py:10
+msgid ""
+"Analyze the organization's bio, goals, and the descriptions of their current "
+"members. Identify gaps in the team's expertise or skillset. Suggest new bot "
+"members to complement the team and help them achieve their objectives. For "
+"each suggested bot member, provide a prompt to set up the bot with the "
+"required skills, functionalities, and integration into the existing team "
+"structure."
+msgstr ""
+"Analyze the organization's bio, goals, and the descriptions of their current "
+"members. Identify gaps in the team's expertise or skillset. Suggest new bot "
+"members to complement the team and help them achieve their objectives. For "
+"each suggested bot member, provide a prompt to set up the bot with the "
+"required skills, functionalities, and integration into the existing team "
+"structure."
+
+#: /srv/app/src/prompts/organization.py:13
+msgid "TODO8"
+msgstr "TODO8"
+
+#: /srv/app/src/prompts/project.py:4
+msgid "TODO9"
+msgstr "TODO9"
+
+#: /srv/app/src/prompts/project.py:7
+msgid "TODO10"
+msgstr "TODO10"
+
+#: /srv/app/src/prompts/project.py:10
+msgid "TODO11"
+msgstr "TODO11"
+
+#: /srv/app/src/prompts/project.py:13
+msgid ""
+"Review the project's name and description, and assess its alignment with the "
+"organization's goals if it belongs to one. Provide constructive feedback on "
+"the project's name memorability, the description's clarity, and the overall "
+"presentation. Evaluate how well the project aligns with the organization's "
+"goals and objectives. Offer recommendations for improvements to enhance the "
+"project's impact, marketability, and its potential to contribute to the "
+"organization's success."
+msgstr ""
+"Review the project's name and description, and assess its alignment with the "
+"organization's goals if it belongs to one. Provide constructive feedback on "
+"the project's name memorability, the description's clarity, and the overall "
+"presentation. Evaluate how well the project aligns with the organization's "
+"goals and objectives. Offer recommendations for improvements to enhance the "
+"project's impact, marketability, and its potential to contribute to the "
+"organization's success."
+
+#: /srv/app/src/prompts/project.py:16
+msgid "TODO12"
+msgstr "TODO12"
+
+#: /srv/app/src/prompts/project.py:19
+msgid "TODO13"
+msgstr "TODO13"
+
+#: /srv/app/src/prompts/reminders.py:7
+msgid ""
+"Examine the given list of reminders and identify their underlying themes or "
+"objectives. Convert the reminders into organized structures such as "
+"organizations, projects, routines, or other relevant categories. Provide a "
+"detailed breakdown of how these reminders can be grouped and transformed to "
+"create a more efficient and streamlined system for the user."
+msgstr ""
+"Examine the given list of reminders and identify their underlying themes or "
+"objectives. Convert the reminders into organized structures such as "
+"organizations, projects, routines, or other relevant categories. Provide a "
+"detailed breakdown of how these reminders can be grouped and transformed to "
+"create a more efficient and streamlined system for the user."
+
+#: /srv/app/src/prompts/reminders.py:10
+msgid ""
+"Please prioritize the following list of reminders based on urgency, "
+"importance, due dates, and the percentage of completed steps (if "
+"applicable). Analyze the tasks and provide a prioritized list, considering "
+"the significance, time sensitivity, due dates, and progress of each item."
+msgstr ""
+"Please prioritize the following list of reminders based on urgency, "
+"importance, due dates, and the percentage of completed steps (if "
+"applicable). Analyze the tasks and provide a prioritized list, considering "
+"the significance, time sensitivity, due dates, and progress of each item."
+
+#: /srv/app/src/prompts/reminders.py:13
+msgid ""
+"Analyze the user's current and previously completed reminders to identify "
+"patterns and recurring tasks. Based on this analysis, suggest new relevant "
+"reminders that the user might need to consider adding to their list, taking "
+"into account their habits and preferences."
+msgstr ""
+"Analyze the user's current and previously completed reminders to identify "
+"patterns and recurring tasks. Based on this analysis, suggest new relevant "
+"reminders that the user might need to consider adding to their list, taking "
+"into account their habits and preferences."
+
+#: /srv/app/src/prompts/routine.py:4
+msgid "TODO14"
+msgstr "TODO14"
+
+#: /srv/app/src/prompts/routine.py:7
+msgid "TODO15"
+msgstr "TODO15"
+
+#: /srv/app/src/prompts/routine.py:10
+msgid "TODO16"
+msgstr "TODO16"
+
+#: /srv/app/src/prompts/routine.py:13
+msgid ""
+"Review the routine's title, description, and schema provided below. Provide "
+"constructive feedback on the overall presentation, including the title's "
+"memorability, the description's clarity, and the schema's organization and "
+"readability. Evaluate the routine's effectiveness in achieving its intended "
+"purpose and its potential for improving user experience. Offer "
+"recommendations for improvements to enhance the routine's efficiency, "
+"maintainability, and scalability."
+msgstr ""
+"Review the routine's title, description, and schema provided below. Provide "
+"constructive feedback on the overall presentation, including the title's "
+"memorability, the description's clarity, and the schema's organization and "
+"readability. Evaluate the routine's effectiveness in achieving its intended "
+"purpose and its potential for improving user experience. Offer "
+"recommendations for improvements to enhance the routine's efficiency, "
+"maintainability, and scalability."
+
+#: /srv/app/src/prompts/routine.py:16
+msgid "TODO17"
+msgstr "TODO17"
+
+#: /srv/app/src/prompts/routine.py:19
+msgid "TODO18"
+msgstr "TODO18"
+
+#: /srv/app/src/prompts/smartContract.py:4
+msgid "TODO19"
+msgstr "TODO19"
+
+#: /srv/app/src/prompts/smartContract.py:7
+msgid "TODO20"
+msgstr "TODO20"
+
+#: /srv/app/src/prompts/smartContract.py:10
+msgid "TODO21"
+msgstr "TODO21"
+
+#: /srv/app/src/prompts/smartContract.py:13
+msgid ""
+"Review the provided smart contract code, focusing on its functionality, "
+"security, efficiency, and overall design. Provide constructive feedback on "
+"potential vulnerabilities, gas usage optimization, code readability, and "
+"adherence to best practices. Offer recommendations for improvements to "
+"enhance the smart contract's reliability, maintainability, and scalability, "
+"ensuring a secure and efficient implementation."
+msgstr ""
+"Review the provided smart contract code, focusing on its functionality, "
+"security, efficiency, and overall design. Provide constructive feedback on "
+"potential vulnerabilities, gas usage optimization, code readability, and "
+"adherence to best practices. Offer recommendations for improvements to "
+"enhance the smart contract's reliability, maintainability, and scalability, "
+"ensuring a secure and efficient implementation."
+
+#: /srv/app/src/prompts/smartContract.py:16
+msgid "TODO22"
+msgstr "TODO22"
+
+#: /srv/app/src/prompts/standard.py:4
+msgid "TODO23"
+msgstr "TODO23"
+
+#: /srv/app/src/prompts/standard.py:7
+msgid "TODO24"
+msgstr "TODO24"
+
+#: /srv/app/src/prompts/standard.py:10
+msgid "TODO25"
+msgstr "TODO25"
+
+#: /srv/app/src/prompts/standard.py:13
+msgid ""
+"Review the {{standard_type}} standard used on this site, which is utilized "
+"to generate input components for completing routines, as well as defining "
+"the types of data expected as input and output for routines, API calls, "
+"smart contracts, and more. Provide constructive feedback on the standard's "
+"design, usability, consistency, and overall effectiveness. Offer "
+"recommendations for improvements to enhance the standard's flexibility, "
+"maintainability, and scalability, ensuring optimal integration and "
+"functionality across various use cases."
+msgstr ""
+"Review the {{standard_type}} standard used on this site, which is utilized "
+"to generate input components for completing routines, as well as defining "
+"the types of data expected as input and output for routines, API calls, "
+"smart contracts, and more. Provide constructive feedback on the standard's "
+"design, usability, consistency, and overall effectiveness. Offer "
+"recommendations for improvements to enhance the standard's flexibility, "
+"maintainability, and scalability, ensuring optimal integration and "
+"functionality across various use cases."
+
+#: /srv/app/src/prompts/standard.py:16
+msgid ""
+"You are a prompt generation robot named Valyxa. You need to gather "
+"information about the users goals, objectives, examples of the preferred "
+"output, and any other relevant contextual information. The prompt should "
+"include all of the necessary information that was provided to you. Ask "
+"follow up questions to the user until you are confident you can produce an "
+"optimal prompt. Your return should be formatted clearly and optimized for "
+"ChatGPT interactions. Start by asking the user the goals, desired output, "
+"and any additional information you may need."
+msgstr ""
+"You are a prompt generation robot named Valyxa. You need to gather "
+"information about the users goals, objectives, examples of the preferred "
+"output, and any other relevant contextual information. The prompt should "
+"include all of the necessary information that was provided to you. Ask "
+"follow up questions to the user until you are confident you can produce an "
+"optimal prompt. Your return should be formatted clearly and optimized for "
+"ChatGPT interactions. Start by asking the user the goals, desired output, "
+"and any additional information you may need."
+
+#: /srv/app/src/prompts/text.py:4
+msgid ""
+"Condense the provided text to a length of {{number}} {{type}}, while "
+"preserving the core ideas and main points. Ensure the shortened text "
+"maintains coherence, readability, and accurately conveys the original "
+"message."
+msgstr ""
+"Condense the provided text to a length of {{number}} {{type}}, while "
+"preserving the core ideas and main points. Ensure the shortened text "
+"maintains coherence, readability, and accurately conveys the original "
+"message."
+
+#: /srv/app/src/prompts/text.py:7
+msgid ""
+"Expand the provided text to a length of {{number}} {{type}}, while "
+"maintaining the core ideas and main points. Ensure the lengthened text "
+"remains coherent, engaging, and accurately conveys the original message, "
+"adding relevant details, examples, or context as needed."
+msgstr ""
+"Expand the provided text to a length of {{number}} {{type}}, while "
+"maintaining the core ideas and main points. Ensure the lengthened text "
+"remains coherent, engaging, and accurately conveys the original message, "
+"adding relevant details, examples, or context as needed."
+
+#: /srv/app/src/prompts/text.py:10
+msgid ""
+"Analyze the provided text and extract the most important points and key "
+"ideas. Create a concise bullet point summary that captures the essence of "
+"the content, maintaining clarity and accuracy while presenting the "
+"information in a structured and easily digestible format."
+msgstr ""
+"Analyze the provided text and extract the most important points and key "
+"ideas. Create a concise bullet point summary that captures the essence of "
+"the content, maintaining clarity and accuracy while presenting the "
+"information in a structured and easily digestible format."
+
+#: /srv/app/src/prompts/text.py:13
+msgid ""
+"Continue writing the provided text by generating {{number}} {{type}} that "
+"maintain the existing tone, style, and content. Ensure the new {{type}} "
+"logically extend the narrative and contribute to the development of the "
+"topic or story."
+msgstr ""
+"Continue writing the provided text by generating {{number}} {{type}} that "
+"maintain the existing tone, style, and content. Ensure the new {{type}} "
+"logically extend the narrative and contribute to the development of the "
+"topic or story."
+
+#: /srv/app/src/prompts/text.py:16
+msgid ""
+"Modify the provided text to match the desired formality level, with 0 being "
+"the most casual and 1 being the most formal. Adjust the tone, vocabulary, "
+"sentence structure, and phrasing accordingly to achieve a "
+"{{formality_level}} level of formality, while preserving the original "
+"message and maintaining readability."
+msgstr ""
+"Modify the provided text to match the desired formality level, with 0 being "
+"the most casual and 1 being the most formal. Adjust the tone, vocabulary, "
+"sentence structure, and phrasing accordingly to achieve a "
+"{{formality_level}} level of formality, while preserving the original "
+"message and maintaining readability."
+
+#: /srv/app/src/prompts/text.py:19
+msgid ""
+"Analyze the provided unstructured text and identify key ideas, themes, and "
+"relationships. Reorganize the content into a structured format, combining "
+"snippets or elements as necessary to create a cohesive, coherent, and easily "
+"digestible piece. This may involve turning meeting notes into a summary, "
+"rearranging information for better flow, or consolidating related ideas into "
+"unified sections."
+msgstr ""
+"Analyze the provided unstructured text and identify key ideas, themes, and "
+"relationships. Reorganize the content into a structured format, combining "
+"snippets or elements as necessary to create a cohesive, coherent, and easily "
+"digestible piece. This may involve turning meeting notes into a summary, "
+"rearranging information for better flow, or consolidating related ideas into "
+"unified sections."
+
+#: /srv/app/src/prompts/text.py:37
+msgid ""
+"Adjust the provided text to a {{reading_level}} level, modifying vocabulary, "
+"sentence structure, complexity, and phrasing while preserving the original "
+"message and readability."
+msgstr ""
+"Adjust the provided text to a {{reading_level}} level, modifying vocabulary, "
+"sentence structure, complexity, and phrasing while preserving the original "
+"message and readability."
+
+#: /srv/app/src/prompts/text.py:40
+msgid ""
+"Explain the provided text as if you were {{age}} years old, using simple "
+"language and clear, concise phrasing. Ensure the explanation is accurate and "
+"conveys the original message, while maintaining readability."
+msgstr ""
+"Explain the provided text as if you were {{age}} years old, using simple "
+"language and clear, concise phrasing. Ensure the explanation is accurate and "
+"conveys the original message, while maintaining readability."
+
+#: /srv/app/src/prompts/text.py:43
+msgid ""
+"Rewrite the provided text in the style of {{desired_style}}, emulating the "
+"tone, vocabulary, sentence structure, and unique characteristics of the "
+"chosen style, while preserving the original message and ensuring readability."
+msgstr ""
+"Rewrite the provided text in the style of {{desired_style}}, emulating the "
+"tone, vocabulary, sentence structure, and unique characteristics of the "
+"chosen style, while preserving the original message and ensuring readability."
+
+#, fuzzy
+#~ msgid "TODOfdsfdsafdsafdsafdsafdsafdsafdsa1"
+#~ msgstr "TODO10"
+
+#~ msgid "TODOfdsfsafdsafds1"
+#~ msgstr "TODO1"

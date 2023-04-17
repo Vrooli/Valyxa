@@ -1,1 +1,0 @@
-REMINDER_SUGGEST = "Analyze the user's current and previously completed reminders to identify patterns and recurring tasks. Based on this analysis, suggest new relevant reminders that the user might need to consider adding to their list, taking into account their habits and preferences."

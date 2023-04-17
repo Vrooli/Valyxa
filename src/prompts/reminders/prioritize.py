@@ -1,1 +1,0 @@
-REMINDER_PRIORITIZE = "Please prioritize the following list of reminders based on urgency, importance, due dates, and the percentage of completed steps (if applicable). Analyze the tasks and provide a prioritized list, considering the significance, time sensitivity, due dates, and progress of each item."

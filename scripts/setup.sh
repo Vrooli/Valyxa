@@ -39,7 +39,8 @@ RUNLEVEL=1 sudo apt-get -y upgrade
 # If this script is being run on the remote server, enable PasswordAuthentication
 if [ -z "${ON_REMOTE}" ]; then
     prompt "Is this script being run on the remote server? (Y/n)"
-    read -r ON_REMOTE
+    read -n1 -r ON_REMOTE
+    echo
 fi
 if [ "${ON_REMOTE}" = "y" ] || [ "${ON_REMOTE}" = "Y" ] || [ "${ON_REMOTE}" = "yes" ] || [ "${ON_REMOTE}" = "Yes" ]; then
     header "Enabling PasswordAuthentication"
@@ -48,7 +49,18 @@ if [ "${ON_REMOTE}" = "y" ] || [ "${ON_REMOTE}" = "Y" ] || [ "${ON_REMOTE}" = "y
     sudo sed -i 's/#\?AuthorizedKeysFile .*/AuthorizedKeysFile .ssh\/authorized_keys/g' /etc/ssh/sshd_config
     chmod 700 ~/.ssh
     chmod 600 ~/.ssh/authorized_keys
+    # Try restarting service. Can either be called "sshd" or "ssh"
     sudo service sshd restart
+    # If sshd fails, try to restart ssh
+    if [ $? -ne 0 ]; then
+        echo "Failed to restart sshd, trying ssh..."
+        sudo systemctl restart ssh
+        # If ssh also fails, exit with an error
+        if [ $? -ne 0 ]; then
+            echo "Failed to restart ssh. Exiting with error."
+            exit 1
+        fi
+    fi
 else
     # Otherwise, make sure mailx is installed. This may be used by some scripts which
     # track errors on the remote server and notify the developer via email.

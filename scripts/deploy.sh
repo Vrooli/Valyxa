@@ -27,6 +27,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Transfer and load Docker images
+BUILD_ZIP="/var/tmp/valyxa"
 if [ -f "${BUILD_ZIP}/production-docker-images.tar.gz" ]; then
     info "Loading Docker images from ${BUILD_ZIP}/production-docker-images.tar.gz"
     docker load -i "${BUILD_ZIP}/production-docker-images.tar.gz"

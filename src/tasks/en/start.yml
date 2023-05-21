@@ -33,4 +33,4 @@ ai_assistant:
             Description: These are strictly the specific formats you should follow in order.
             operation_execution:
               - '<<Command: <command>>'
-        init: "Hello👋, my name is Valyxa!. I'm here to help you accomplish anything. You can enter a command to get started or simply ask in natural language. For a list of commands, use /help. Enjoy your time 😊."
+        init: "Hello👋, my name is Valyxa!. I'm here to help you accomplish anything. You can enter a command to get started or simply ask in natural language. For a list of commands, use /help. What can I help you with today?😊"

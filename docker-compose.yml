@@ -2,16 +2,19 @@ version: '3.9'
 
 services:
   redis:
-    image: "redis:7-alpine"
+    image: redis:7-alpine
     container_name: valyxa-redis
+    restart: always
+    volumes:
+      - ./data/redis:${PROJECT_DIR}/data/redis:z
     ports:
       - "6379:6379"
+    command: sh -c "mkdir -p /data/redis/appendonlydir && rm -f /data/redis/dump.rdb && redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --appendonly yes --protected-mode yes --requirepass "${REDIS_PASS}" --dbfilename dump.rdb --dir /data/redis/ && redis-cli SLAVEOF NO ONE"
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
-
   python_app:
     build:
       context: .
@@ -28,6 +31,7 @@ services:
     environment:
       PROJECT_DIR: "${PROJECT_DIR}"
       REDIS_URL: "${REDIS_URL}"
+      REDIS_PASS: "${REDIS_PASS}"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
       LANGUAGES: "${LANGUAGES}"
     command: ["${PROJECT_DIR}/scripts/start.sh"]

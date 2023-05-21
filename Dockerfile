@@ -1,6 +1,7 @@
 FROM python:3.9-alpine
 
-WORKDIR /app
+ARG PROJECT_DIR
+WORKDIR ${PROJECT_DIR}
 
 COPY requirements.txt .
 

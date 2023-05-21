@@ -1,22 +1,61 @@
 import os
+from typing import Optional, Dict, Any
 import redis
 import gettext
 from prompts.routine import ROUTINE_CRITICIZE
 from time import sleep
-from dotenv import load_dotenv
+import logging
+import requests
+import json
 
-load_dotenv()
+# Configure logging
+logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger = logging.getLogger(__name__)
 
+# Connect to Redis
+r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True, password=os.environ.get('REDIS_PASS'))
+
+# Set up translations
 # Set the locale directory and the target language
 locale_dir = os.path.join(os.environ['PROJECT_DIR'], 'translations')
 language = 'en'
-
 # Configure gettext
 gettext.bindtextdomain('messages', locale_dir)
 gettext.textdomain('messages')
-
 # Import the translation function
 _ = gettext.gettext
+
+def call_openai_api(model: str, prompt: str, temperature: float) -> Optional[Dict[str, Any]]:
+    """
+    Makes a request to the OpenAI API with the provided parameters.
+
+    Args:
+        model (str): Model to use for the request.
+        prompt (str): Prompt to use for the request.
+        temperature (float): Temperature to use for the request.
+
+    Returns:
+        dict: Response from the OpenAI API or None if there was an error.
+    """
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key:
+        raise ValueError("Couldn't find 'OPENAI_API_KEY' in environment variables")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}",
+    }
+    data = {
+        "model": model,
+        "prompt": prompt,
+        "temperature": temperature,
+    }
+    try:
+        response = requests.post("https://api.openai.com/v1/completions", headers=headers, data=json.dumps(data))
+        response.raise_for_status()  # Raise an exception if the response indicates an error
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request to OpenAI API failed: {e}")
+        return None
+    return response.json()
 
 def plan(goal):
     """
@@ -107,9 +146,6 @@ def main():
     print('starting main')
     print(f"Translation test: {ROUTINE_CRITICIZE}")
 
-    redis_url = os.environ["REDIS_URL"]
-    r = redis.Redis.from_url(redis_url)
-
     key = "test_key"
     value = "Hello, Redis!"
 
@@ -118,8 +154,20 @@ def main():
 
     sleep(1)
 
-    retrieved_value = r.get(key).decode('utf-8')
+    retrieved_value = r.get(key)
     print(f"Retrieved value for key '{key}': {retrieved_value}")
+
+    # Test call to OpenAI API function
+    model = "text-davinci-003"  # replace with your desired model
+    prompt = "Translate this text"  # replace with your desired prompt
+    temperature = 0.6  # replace with your desired temperature
+
+    response = call_openai_api(model, prompt, temperature)
+    if response is not None:
+        print(f"OpenAI API response: {response}")
+    else:
+        print("OpenAI API call failed")
+
 
     sleep(100)
 

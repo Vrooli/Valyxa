@@ -91,8 +91,9 @@ If not using [Vrooli](https://github.com/Vrooli/Vrooli) or another UI that's alr
 ```json
 {
     "key": "<your-api-key>", // Can use API_FOR_VROOLI for uncapped usage. Otherwise, we validate and fetch api information from VROOLI_URL
+    "config": "<config>", // Optional configuration if not starting a generic conversation. See `ai_assistant.features.commands.commands` in `start.yml` for options
     "message": "Initial response, or reply in conversation",
-    "messageId": <message-id>, // ID if continuing message. Must be continuing the conversation using the same key
+    "messageId": <message-id>, // Optional ID if continuing message. Must be continuing the conversation using the same key
     "jwt": "<json-web-token>", // If key is API_FOR_VROOLI, this token ensures that the conversation cannot be accessed by anyone else
 }
 ```

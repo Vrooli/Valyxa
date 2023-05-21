@@ -1,10 +1,49 @@
 version: '3.9'
-
 services:
+  python_app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        PROJECT_DIR: "${PROJECT_DIR}"
+    deploy:
+      resources:
+        limits:
+          memory: 1500M # Update this to suit your needs. This number hasn't been tested yet.
+    container_name: valyxa-python
+    image: valyxa-python
+    restart: always
+    environment:
+      FLASK_APP: src/app.py
+      FLASK_ENV: production
+      FLASK_RUN_HOST: 0.0.0.0
+      PYTHONUNBUFFERED: 1 # Required for logging to work correctly
+      PROJECT_DIR: "${PROJECT_DIR}"
+      REDIS_URL: "${REDIS_URL}"
+      REDIS_PASS: "${REDIS_PASS}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      API_FOR_VROOLI: "${API_FOR_VROOLI}"
+      LANGUAGES: "${LANGUAGES}"
+      VIRTUAL_HOST: "${VIRTUAL_HOST}"
+      VIRTUAL_PORT: "${PORT_VALYXA}"
+      LETSENCRYPT_HOST: "${VIRTUAL_HOST}"
+      LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL}"
+    volumes:
+      - ./:${PROJECT_DIR}
+    ports:
+      - "${PORT_VALYXA}:${PORT_VALYXA}"
+    networks:
+      - proxy
+      - app
+    depends_on:
+      - redis
+    command: /bin/sh -c "chmod +x ${PROJECT_DIR}/scripts/* && ${PROJECT_DIR}/scripts/start.sh"
   redis:
     image: redis:7-alpine
     container_name: valyxa-redis
     restart: always
+    networks:
+      - app
     volumes:
       - ./data/redis:${PROJECT_DIR}/data/redis:z
     ports:
@@ -15,23 +54,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  python_app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        PROJECT_DIR: "${PROJECT_DIR}"
-    container_name: valyxa-python
-    image: valyxa-python:dev
-    volumes:
-      - ./:${PROJECT_DIR}
-      - ./translations:${PROJECT_DIR}/translations
-    depends_on:
-      - redis
-    environment:
-      PROJECT_DIR: "${PROJECT_DIR}"
-      REDIS_URL: "${REDIS_URL}"
-      REDIS_PASS: "${REDIS_PASS}"
-      OPENAI_API_KEY: "${OPENAI_API_KEY}"
-      LANGUAGES: "${LANGUAGES}"
-    command: ["${PROJECT_DIR}/scripts/start.sh"]
+networks:
+  proxy:
+    name: nginx-proxy
+    external: true
+  app:

@@ -6,7 +6,8 @@ from time import sleep
 import logging
 import requests
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
+from src.utils.file_utils import file_path, load_yml
 import yaml
 import openai
 
@@ -22,53 +23,39 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Connect to Redis
 r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True, password=os.environ.get('REDIS_PASS'))
 
+# Initialize Flask
 app = Flask(__name__)
 
-def file_path(filename):
-    """
-    Returns the absolute path to a file.
+@app.before_request
+def limit_request_rate():
+    # Read the API key from the request headers
+    api_key = request.headers.get('API_KEY')
 
-    Args:
-        filename (str): Name of the file, or path relative to this file (src/app.py).
+    # If no API key is provided, throw an error
+    if api_key is None:
+        abort(403, "API Key is required")
 
-    Returns:
-        str: Absolute path to the file.
-    """
-    # Get the directory of the current script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Get the absolute path of the file
-    abs_file_path = os.path.join(script_dir, filename)
-    return abs_file_path
+    # Check if API key matches with the environment variable
+    expected_api_key = os.environ.get('API_FOR_VROOLI')
 
-def load_yml(filename: str, lang: str) -> Optional[dict]:
-    """
-    Loads a YAML file based on language.
+    # Bypass rate limit check if the key matches 'API_FOR_VROOLI'
+    if api_key == expected_api_key:
+        return
 
-    Args:
-        filename (str): Name of the file with or without '.yml' extension.
-        lang (str): Language code of the YAML file. If not found, defaults to 'en'.
+    # Check the Redis for the key
+    count = r.get(api_key)
 
-    Returns:
-        Optional[dict]: Parsed YAML data, or None if an error occurred.
-    """
-    # Remove '.yml' from filename if it exists
-    if filename.endswith('.yml'):
-        filename = filename[:-4]
-
-    # construct the file path
-    path = f"tasks/{lang}/{filename}.yml"
-
-    # if the specified language file does not exist, default to English
-    if not os.path.exists(file_path(path)):
-        logger.warning(f"Could not find file: {path}. Defaulting to English.")
-        path = f"tasks/en/{filename}.yml"
-
-    with open(file_path(path), 'r') as stream:
-        try:
-            return yaml.safe_load(stream)
-        except yaml.YAMLError as e:
-            logger.error(f"Error reading YAML file: {e}")
-            return None
+    if count is None:
+        # If the key is not in the Redis, set it with a value of 1
+        r.set(api_key, 1)
+        # Also, set the key to expire in 24 hours (86400 seconds)
+        r.expire(api_key, 86400)
+    elif int(count) >= 5:
+        # If the limit has been reached, inform the user
+        abort(429, "API usage limit reached. Please try again in 24 hours.")
+    else:
+        # If the key is in the Redis and limit has not been reached, increment the value
+        r.incr(api_key)
 
 def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
     """
@@ -125,6 +112,20 @@ def main():
         logger.error("OpenAI API call failed")
         return jsonify({"error": "OpenAI API call failed"}), 500
     
+@app.route('/generate', methods=['POST'])
+def generate_text():
+    # Read the API key and prompt from the request
+    prompt = request.json.get('prompt')
+
+    # Call the OpenAI API
+    model = "gpt-4"
+    response = call_openai_api(model, prompt)
+
+    if response is not None:
+        return jsonify({"response": response}), 200
+    else:
+        return jsonify({"error": "OpenAI API call failed"}), 500
+    
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
     return jsonify({"status": "healthy"}), 200
@@ -135,7 +136,7 @@ def help():
     help_text = """
     To use this API, send a GET request to the '/test' endpoint.
     It sets and retrieves a key-value pair from Redis, then makes a call to the OpenAI API.
-    For more information, check out the GitHub repository: https://github.com/YourUsername/YourRepo
+    For more information, check out the GitHub repository: https://github.com/Vrooli/Valyxa
     """
     return jsonify({"Help": help_text}), 200
 

@@ -1,3 +1,35 @@
+"""
+Valyxa AI Assistant Server
+
+This script serves as the main server for the Valyxa AI Assistant, which powers AI features for 
+the Vrooli platform. The server is built on Flask and connects to both Redis for rate limiting 
+and OpenAI for generating text.
+
+The server provides several endpoints:
+
+- `/generate`: Accepts a POST request containing a JSON object with a 'prompt' key. The server 
+then passes this prompt to OpenAI to generate a response.
+
+- `/healthcheck`: Returns a JSON object indicating the status of the server.
+
+- `/help`: Provides basic help information about the API.
+
+The server also implements rate limiting, allowing each API key to make a certain number of requests 
+per day. Special API keys can bypass this limit.
+
+The `call_openai_api` function is a utility for making requests to the OpenAI API and logging the 
+responses.
+
+This script expects the following environment variables:
+- 'OPENAI_API_KEY': The API key for OpenAI.
+- 'API_FOR_VROOLI': The special API key that can bypass rate limits.
+- 'REDIS_PASS': The password for the Redis server (if required).
+- 'VIRTUAL_PORT': The port to run the server on.
+- 'FLASK_ENV': The environment Flask is running in.
+
+In the case of a critical error, such as failure to connect to Redis or OpenAI, the script logs the 
+error and may terminate.
+"""
 import json
 import logging
 import os
@@ -10,7 +42,7 @@ import requests
 import yaml
 from flask import Flask, abort, jsonify, request
 
-from src.utils.file_utils import file_path, load_yml
+from src.utils.file_utils import load_yml
 
 models = ['gpt-4', 'gpt-3.5-turbo']
 
@@ -32,6 +64,18 @@ app = Flask(__name__)
 
 @app.before_request
 def limit_request_rate():
+    """
+    A decorator function to limit the rate of API requests.
+
+    This function reads the 'API_KEY' from the request headers. If no API key is provided, 
+    it aborts the request with a 403 status. If the API key matches the 'API_FOR_VROOLI' 
+    environment variable, the function bypasses the rate limit check.
+
+    Otherwise, it checks Redis for the API key. If the key is not present in Redis, it sets 
+    the key with a value of 1 and an expiry time of 24 hours. If the key is present and its 
+    count has reached the limit (currently 5), it aborts the request with a 429 status. If 
+    the key is present and its count is below the limit, it increments the count.
+    """
     # Read the API key from the request headers
     api_key = request.headers.get('API_KEY')
 
@@ -93,7 +137,15 @@ def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
 
 
 @app.route('/test', methods=['GET'])
-def main():
+def test():
+    """
+    Endpoint for testing the server.
+
+    This function logs the start of the '/test' endpoint, sets and retrieves a 
+    key-value pair in Redis, and makes a test call to the OpenAI API using the 
+    contents of the start.yml file. It returns a JSON object with the response 
+    from OpenAI, or an error message if the API call fails.
+    """
     logger.info('Starting /test')
 
     key = "test_key"
@@ -124,6 +176,13 @@ def main():
 
 @app.route('/generate', methods=['POST'])
 def generate_text():
+    """
+    Endpoint for generating text with OpenAI.
+
+    This function reads the 'prompt' from the request JSON. It then calls the 
+    OpenAI API with the prompt and returns a JSON object containing the response. 
+    If the API call fails, it returns an error message.
+    """
     # Read the API key and prompt from the request
     prompt = request.json.get('prompt')
 
@@ -139,6 +198,11 @@ def generate_text():
 
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
+    """
+    Endpoint for checking the health of the server.
+
+    This function returns a JSON object with a status of "healthy".
+    """
     return jsonify({"status": "healthy"}), 200
 
 

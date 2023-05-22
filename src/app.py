@@ -117,20 +117,17 @@ def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
         dict: Response from the OpenAI API or None if there was an error.
     """
     api_key = os.getenv('OPENAI_API_KEY')
-    logger.debug(f"Got key: {api_key}")
     if not api_key:
         logger.debug("Couldn't find 'OPENAI_API_KEY' in environment variables")
-        raise ValueError(
-            "Couldn't find 'OPENAI_API_KEY' in environment variables")
+        raise ValueError("Couldn't find 'OPENAI_API_KEY' in environment variables")
     try:
-        logger.debug(
-            f"Calling OpenAI API with model: {model}, prompt: {prompt}")
+        logger.debug("Calling OpenAI API with model: %s, prompt: %s", model, prompt)
         completion = openai.ChatCompletion.create(
             model=model, messages=[{"role": "user", "content": prompt}])
-        logger.debug(f"Got completion: {json.dumps(completion)}")
+        logger.debug("Got completion: %s", json.dumps(completion))
         response = completion.choices[0].message.content
     except requests.exceptions.RequestException as e:
-        logger.error(f"Request to OpenAI API failed: {e}")
+        logger.error("Request to OpenAI API failed: %s", e)
         return None
     return response
 
@@ -151,22 +148,20 @@ def test():
     value = "Hello, Redis!"
 
     r.set(key, value)
-    logger.info(f"Set key-value pair: {key} - {value}")
+    logger.info("Set key-value pair: %s - %s", key, value)
 
     sleep(1)
 
     retrieved_value = r.get(key)
-    logger.info(f"Retrieved value for key '{key}': {retrieved_value}")
+    logger.info("Retrieved value for key '%s': %s", key, retrieved_value)
 
-    # Load the contents of the start.yml file
     prompt = json.dumps(load_yml('start', 'en'))
 
-    # Test call to OpenAI API function
     model = "gpt-4"
 
     response = call_openai_api(model, prompt)
     if response is not None:
-        logger.info(f"OpenAI API response: {response}")
+        logger.info("OpenAI API response: %s", response)
         return jsonify(response), 200
     else:
         logger.error("OpenAI API call failed")
@@ -182,10 +177,8 @@ def generate_text():
     OpenAI API with the prompt and returns a JSON object containing the response. 
     If the API call fails, it returns an error message.
     """
-    # Read the API key and prompt from the request
     prompt = request.json.get('prompt')
 
-    # Call the OpenAI API
     model = "gpt-4"
     response = call_openai_api(model, prompt)
 
@@ -221,4 +214,4 @@ if __name__ == "__main__":
         if os.environ['FLASK_ENV'] == 'development':
             app.run(host='0.0.0.0', port=port)
     except Exception as e:
-        logger.error(f"Error starting server: {e}")
+        logger.error("Error starting server: %s", e)

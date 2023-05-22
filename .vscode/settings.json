@@ -7,6 +7,15 @@
         "source.organizeImports": true
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.tabSize": 4
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.formatOnSave": true,
+        "diffEditor.ignoreTrimWhitespace": false
     }
 }

@@ -98,6 +98,52 @@ If not using [Vrooli](https://github.com/Vrooli/Vrooli) or another UI that's alr
 }
 ```
 
+## Testing through OpenAI
+You can simulate this program through [ChatGPT](https://chat.openai.com/) or the [OpenAI Playground](https://platform.openai.com/playground) by pasting in configuration prompts directly. For example, you can send the following message to ChatGPT:
+
+```
+You are my assistant. Use the guideline below to be of most help to me:
+
+<contents_of_start.yml_file>
+```
+
+where `<contents_of_start.yml_file>` is the contents of [start.yml](src/tasks/en/start.yml). ChatGPT should respond with something like:
+
+```
+Hello! I'm Valyxa, your personal assistant. How can I assist you today? You can enter a command to get started or ask me in natural language. If you need a list of commands, just use "/help".
+```
+
+and you can continue the conversation from there. To continue the conversation, you may also need to provide other configuration prompts. For example, when a command is detected (e.g. `/note create`), we silently add the [text.yml]() configuration before your message:
+
+```
+Use the guideline below to help me with this task:
+
+<contents_of_text.yml_file>
+
+<your_message>
+```
+
+ so that Valyxa is ready to help you create a note. When starting a task without specifying a command (e.g. you enter "I want to create a new note"), the AI should respond with something like:
+
+```
+<Command: /create note> Sure! what would you want to create a note about?
+```
+
+At the start of your next message, you must provide the [text.yml]() configuration just like before:
+
+```
+<contents_of_text.yml_file>
+
+<your_message>
+```
+
+### Improving Configuration Prompts
+ChatGPT is great at improving configuration prompts. To do so, enter this whenever the AI responds unexpectedly:
+
+```
+That is not the response I expected. I wanted you to <your criticism>. Please suggest a new configuration file that might fix this issue.
+```
+
 # 🦜 Multilingual Support
 We are actively seeking multilingual speakers to help us translate Valyxa's prompts and documentation to make our platform accessible to a wider audience. If you are a multilingual speaker and would like to contribute by providing translations, please add your language to the `translations` folder and submit a pull request. We will review your contribution and, if approved, merge it into the main repository.
 

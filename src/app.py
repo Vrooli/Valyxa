@@ -157,7 +157,7 @@ def test():
 
     prompt = json.dumps(load_yml('start', 'en'))
 
-    model = "gpt-4"
+    model = "gpt-3.5-turbo"
 
     response = call_openai_api(model, prompt)
     if response is not None:
@@ -179,7 +179,7 @@ def generate_text():
     """
     prompt = request.json.get('prompt')
 
-    model = "gpt-4"
+    model = "gpt-3.5-turbo"
     response = call_openai_api(model, prompt)
 
     if response is not None:

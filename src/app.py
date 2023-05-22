@@ -39,7 +39,6 @@ from typing import Any, Dict, Optional
 import openai
 import redis
 import requests
-import yaml
 from flask import Flask, abort, jsonify, request
 
 from src.utils.file_utils import load_yml

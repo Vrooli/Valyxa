@@ -1,30 +1,34 @@
-import os
-from typing import Optional, Dict, Any
-import redis
-import gettext
-from time import sleep
-import logging
-import requests
 import json
-from flask import Flask, jsonify, request, abort
-from src.utils.file_utils import file_path, load_yml
-import yaml
+import logging
+import os
+from time import sleep
+from typing import Any, Dict, Optional
+
 import openai
+import redis
+import requests
+import yaml
+from flask import Flask, abort, jsonify, request
+
+from src.utils.file_utils import file_path, load_yml
 
 models = ['gpt-4', 'gpt-3.5-turbo']
 
 # Configure logging
-logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logging.basicConfig(filename='app.log', level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger = logging.getLogger(__name__)
 
 # Configure openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Connect to Redis
-r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True, password=os.environ.get('REDIS_PASS'))
+r = redis.Redis(host='redis', port=6379, db=0,
+                decode_responses=True, password=os.environ.get('REDIS_PASS'))
 
 # Initialize Flask
 app = Flask(__name__)
+
 
 @app.before_request
 def limit_request_rate():
@@ -57,6 +61,7 @@ def limit_request_rate():
         # If the key is in the Redis and limit has not been reached, increment the value
         r.incr(api_key)
 
+
 def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
     """
     Makes a request to the OpenAI API with the provided parameters.
@@ -72,16 +77,20 @@ def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
     logger.debug(f"Got key: {api_key}")
     if not api_key:
         logger.debug("Couldn't find 'OPENAI_API_KEY' in environment variables")
-        raise ValueError("Couldn't find 'OPENAI_API_KEY' in environment variables")
+        raise ValueError(
+            "Couldn't find 'OPENAI_API_KEY' in environment variables")
     try:
-        logger.debug(f"Calling OpenAI API with model: {model}, prompt: {prompt}")
-        completion = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
+        logger.debug(
+            f"Calling OpenAI API with model: {model}, prompt: {prompt}")
+        completion = openai.ChatCompletion.create(
+            model=model, messages=[{"role": "user", "content": prompt}])
         logger.debug(f"Got completion: {json.dumps(completion)}")
         response = completion.choices[0].message.content
     except requests.exceptions.RequestException as e:
         logger.error(f"Request to OpenAI API failed: {e}")
         return None
     return response
+
 
 @app.route('/test', methods=['GET'])
 def main():
@@ -111,7 +120,8 @@ def main():
     else:
         logger.error("OpenAI API call failed")
         return jsonify({"error": "OpenAI API call failed"}), 500
-    
+
+
 @app.route('/generate', methods=['POST'])
 def generate_text():
     # Read the API key and prompt from the request
@@ -125,7 +135,8 @@ def generate_text():
         return jsonify({"response": response}), 200
     else:
         return jsonify({"error": "OpenAI API call failed"}), 500
-    
+
+
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
     return jsonify({"status": "healthy"}), 200

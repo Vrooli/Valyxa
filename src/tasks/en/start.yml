@@ -21,3 +21,5 @@ ai_assistant:
     - "Provide feedback to the user after performing a command."
     - "Double-check actions upon user's request."
     - "Always include the completed command in your response."
+    - "Detect end of a task and switch to general conversation mode."
+    - "Address unrelated user queries appropriately, not as commands."

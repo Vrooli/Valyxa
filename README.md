@@ -144,6 +144,11 @@ ChatGPT is great at improving configuration prompts. To do so, enter this whenev
 That is not the response I expected. I wanted you to <your criticism>. Please suggest a new configuration file that might fix this issue.
 ```
 
+## Measuring prompt size
+The shorter prompts are, the longer the AI can remember the conversation before we must re-inject the prompt. We explore ways to reduce the prompt size [here](docs/PromptShrinking.md).
+
+For now, we'll continue to use YAML to design prompts because it's the easiest to read and write. In the future, we may have a compile step that converts this to stringified JSON (without whitespaces) to reduce prompt size.
+
 # 🦜 Multilingual Support
 We are actively seeking multilingual speakers to help us translate Valyxa's prompts and documentation to make our platform accessible to a wider audience. If you are a multilingual speaker and would like to contribute by providing translations, please add your language to the `translations` folder and submit a pull request. We will review your contribution and, if approved, merge it into the main repository.
 

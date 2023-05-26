@@ -1,10 +1,12 @@
-import os
-import yaml
 import logging
+import os
 from typing import Optional
+
+import yaml
 
 # Configure logging
 logger = logging.getLogger(__name__)
+
 
 def file_path(filename):
     """
@@ -19,8 +21,9 @@ def file_path(filename):
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Get the absolute path of the file
-    abs_file_path = os.path.join(script_dir, filename)
+    abs_file_path = os.path.join(script_dir, "../", filename)
     return abs_file_path
+
 
 def load_yml(filename: str, lang: str) -> Optional[dict]:
     """

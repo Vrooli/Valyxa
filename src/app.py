@@ -40,8 +40,13 @@ import openai
 import redis
 import requests
 from flask import Flask, abort, jsonify, request
+from flask_jwt_extended import JWTManager, get_jwt_identity, jwt_required
+from flask_jwt_extended.exceptions import (InvalidHeaderError,
+                                           NoAuthorizationError,
+                                           RevokedTokenError, WrongTokenError)
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
-from src.utils.file_utils import load_yml
+from src.utils.file_utils import file_path, load_yml
 
 models = ['gpt-4', 'gpt-3.5-turbo']
 
@@ -60,8 +65,15 @@ r = redis.Redis(host='redis', port=6379, db=0,
 # Initialize Flask
 app = Flask(__name__)
 
+# Initialize JWT
+jwt = JWTManager(app)
+with open(file_path('../jwt_pub.pem'), 'r') as f:
+    app.config['JWT_PUBLIC_KEY'] = f.read()
+app.config['JWT_ALGORITHM'] = 'RS256'
+
 
 @app.before_request
+@jwt_required()
 def limit_request_rate():
     """
     A decorator function to limit the rate of API requests.
@@ -77,6 +89,9 @@ def limit_request_rate():
     """
     # Read the API key from the request headers
     api_key = request.headers.get('API_KEY')
+
+    # Extract the user ID from the JWT
+    user_id = get_jwt_identity()
 
     # If no API key is provided, throw an error
     if api_key is None:
@@ -105,6 +120,16 @@ def limit_request_rate():
         r.incr(api_key)
 
 
+@app.errorhandler(NoAuthorizationError)
+@app.errorhandler(InvalidHeaderError)
+@app.errorhandler(WrongTokenError)
+@app.errorhandler(RevokedTokenError)
+@app.errorhandler(ExpiredSignatureError)
+@app.errorhandler(InvalidTokenError)
+def handle_jwt_errors(e):
+    return jsonify({"error": "Invalid or expired token"}), 401
+
+
 def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
     """
     Makes a request to the OpenAI API with the provided parameters.
@@ -119,9 +144,11 @@ def call_openai_api(model: str, prompt: str) -> Optional[Dict[str, Any]]:
     api_key = os.getenv('OPENAI_API_KEY')
     if not api_key:
         logger.debug("Couldn't find 'OPENAI_API_KEY' in environment variables")
-        raise ValueError("Couldn't find 'OPENAI_API_KEY' in environment variables")
+        raise ValueError(
+            "Couldn't find 'OPENAI_API_KEY' in environment variables")
     try:
-        logger.debug("Calling OpenAI API with model: %s, prompt: %s", model, prompt)
+        logger.debug(
+            "Calling OpenAI API with model: %s, prompt: %s", model, prompt)
         completion = openai.ChatCompletion.create(
             model=model, messages=[{"role": "user", "content": prompt}])
         logger.debug("Got completion: %s", json.dumps(completion))

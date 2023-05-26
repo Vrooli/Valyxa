@@ -174,4 +174,6 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python
+# JWT keys
+jwt_pub.pem
+jwt_priv.pem

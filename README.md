@@ -83,7 +83,7 @@ As Vrooli users pursue their goals and work on their projects, Valyxa will be th
 Valyxa is designed to complement the Vrooli platform, enhancing the user experience and helping users achieve their goals more efficiently. By acting as a personal assistant and co-worker, Valyxa provides the support, automation, and collaboration needed to take productivity to the next level.
 
 ## [👩🏼‍💻 Developer setup][setup-guide]
-Linked is our guide for setting up all Vrooli repos. No extra steps are required.
+Linked is our guide for setting up all Vrooli repos. This should cover most of the setup needed to run Valyxa. Currently, the only extra step is that you must copy Vrooli's `jwt_pub.pem` and `jwt_priv.pem` (which are auto-generated when you run `setup.sh` in Vrooli) to the root of this repo. These files are used to verify and sign JSON Web Tokens (JWTs) for authentication, which is required to secure chat conversations.
 
 ## Usage
 If not using [Vrooli](https://github.com/Vrooli/Vrooli) or another UI that's already set up to use Valyxa, you can send a POST request to `http://localhost:<PORT_VALYXA>` if testing locally, or `https://<your-domain>` if testing on a Virtual Private Server (VPS). The request must follow this structure:

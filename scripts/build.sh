@@ -55,7 +55,6 @@ check_var OPENAI_API_KEY
 cd ${HERE}/..
 info "Building (and Pulling) Docker images..."
 docker-compose --env-file .env -f docker-compose-prod.yml build
-docker pull postgres:13-alpine
 docker pull redis:7-alpine
 
 # Save and compress Docker images

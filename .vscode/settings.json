@@ -15,7 +15,7 @@
         "editor.detectIndentation": false,
         "editor.tabSize": 2,
         "editor.autoIndent": "advanced",
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": false, // Disabled because of how it formats arrays
         "diffEditor.ignoreTrimWhitespace": false
     }
 }
